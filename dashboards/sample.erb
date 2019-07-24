@@ -1,0 +1,37 @@
+<% content_for :title do %>Apoio<% end %>
+<div class="gridster">
+  <ul>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="jiraInProgressIssues" data-view="Number" data-title="In Dev" data-addclass-status-danger="isTooHigh"></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="jiraReviewIssues" data-view="Number" data-title="Code Review" data-addclass-status-danger="isTooHigh"></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="jiraStagingIssues" data-view="Number" data-title="Staging"></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="jiraWorkInProgress" data-view="Number" data-title="Work In Progress" data-addclass-status-danger="wipIsTooHigh" data-addclass-status-warning="wipIsTooLow"></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="jiraStuckInStaging" data-view="Number" data-title="Em Staging há mais de 3 dias" data-addclass-status-danger="higherThanZero"></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="jiraBlockedIssues" data-view="Number" data-title="Bloqueados" data-addclass-status-danger="higherThanZero"></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="jiraExpediteIssues" data-view="Number" data-title="Expedites" data-addclass-status-danger="higherThanZero"></div>
+    </li>
+    <!--
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="35074546" data-view="Number" data-title="Chamados Zendesk" data-suffix=""></div>
+    </li>
+    -->
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="semaphoreAcessos" data-view="BranchList" data-title="Semaphore" data-suffix=""></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="semaphoreNPS" data-view="BranchList" data-title="Semaphore" data-suffix=""></div>
+    </li>
+  </ul>
+</div>

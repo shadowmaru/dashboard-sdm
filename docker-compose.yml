@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web:
+    ports:
+      - "3030:3030"
+    build: .
+    command: smashing start
+    env_file:
+      - .env.docker
+    tty: true
+    stdin_open: true
