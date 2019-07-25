@@ -1,6 +1,9 @@
-<% content_for :title do %>Apoio<% end %>
+<% content_for :title do %>Apoio - Jira<% end %>
 <div class="gridster">
   <ul>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="team-name" data-view="Text" data-title="Apoio" data-text="Jira" data-moreinfo=""></div>
+    </li>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
       <div data-id="jiraInProgressIssues" data-view="Number" data-title="In Dev" data-addclass-status-danger="isTooHigh"></div>
     </li>
@@ -21,17 +24,6 @@
     </li>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
       <div data-id="jiraExpediteIssues" data-view="Number" data-title="Expedites" data-addclass-status-danger="higherThanZero"></div>
-    </li>
-    <!--
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="35074546" data-view="Number" data-title="Chamados Zendesk" data-suffix=""></div>
-    </li>
-    -->
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="semaphoreAcessos" data-view="BranchList" data-title="Semaphore" data-suffix=""></div>
-    </li>
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="semaphoreNPS" data-view="BranchList" data-title="Semaphore" data-suffix=""></div>
     </li>
   </ul>
 </div>

@@ -14,7 +14,7 @@ class SemaphoreConnector
   end
 
   def get_branches(project_name)
-    Semaphoreapp::Project.find_by_name(project_name).branches.map { |branch| branch.branch_name }
+    Semaphoreapp::Project.find_by_name(project_name).branches.map(&:branch_name)
   end
 
   def branch_status(project_name, branch_title)
@@ -41,6 +41,10 @@ end
 
 @semaphore = SemaphoreConnector.new
 
+def build_commit_info(branch)
+  "\"#{branch['latest_commit_message'].slice!(0, 22)}...\"<br> - #{branch['latest_commit_author']}"
+end
+
 def build_branch_list(project, branches)
   branch_list = @semaphore.get_branches(project).map do |branch|
     this_branch = @semaphore.branch_status(project, branch)
@@ -57,16 +61,26 @@ def build_branch_list(project, branches)
   branch_list
 end
 
-SCHEDULER.every '10m', first_in: 0 do |job|
+def send_branch_status(project, branch, id)
+  status = @semaphore.branch_status(project, branch)
+
   send_event(
-    'semaphoreAcessos',
+    id,
     {
-      title: 'Acessos',
-      items: build_branch_list('acessos', ['master'])
+      title: project,
+      text: branch,
+      moreinfo: build_commit_info(status),
+      status: status['build_status']
     }
   )
-  send_event('semaphoreNPS', {
-    title: 'NPS',
-    items: build_branch_list('nps', ['master'])
-  })
+end
+
+SCHEDULER.every '10m', first_in: 0 do |job|
+  send_branch_status('acessos', 'master', 'semaphoreAcessos')
+  send_branch_status('BioPonto', 'master', 'semaphorePonto')
+  send_branch_status('nps', 'master', 'semaphoreNPS')
+  send_branch_status('workflow', 'master', 'semaphoreWorkflow')
+  send_branch_status('zendesk-auth', 'master', 'semaphoreAuth')
+  send_branch_status('topdesk_api', 'master', 'semaphoreTopdesk')
+  send_branch_status('Bio-Monitor', 'master', 'semaphoreMonitor')
 end

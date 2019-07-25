@@ -3,13 +3,11 @@ require 'json'
 
 # pass in limit: 5 to get the top 5 errors
 def get_honeybadger_errors(options = {})
-  api_token = "HgCM8bCTvdas2UWmuuRz:"
-  project_id = options[:'project-id']
+  api_token = ENV['HONEYBADGER_TOKEN']
+  project_id = options[:project_id]
 
   url = "https://app.honeybadger.io/v2/projects/#{project_id}/faults?q=environment:production"
-  if options[:order]
-    url += "&order=#{options[:order]}"
-  end
+  url += "&order=#{options[:order]}" if options[:order]
 
   uri = URI.parse(url)
   http = Net::HTTP.new(uri.host, uri.port)
@@ -19,7 +17,7 @@ def get_honeybadger_errors(options = {})
     {
       'Accept' => 'application/json',
       'Content-Type' => 'application/json',
-      'Authorization' => "Basic #{(Base64.encode64(api_token)).strip}"
+      'Authorization' => "Basic #{Base64.encode64(api_token).strip}"
     })
 
   response = http.request(request)
@@ -30,11 +28,21 @@ def get_honeybadger_errors(options = {})
   json_response['results'][0..(upper_bound - 1)]
 end
 
-SCHEDULER.every '5m', :first_in => 0 do |job|
-  # pass in your own limit, or let it default to 5
-  top_five_faults = get_honeybadger_errors(order: "frequent")
-  recent_five_faults = get_honeybadger_errors(order: "recent")
+def send_errors(project, name)
+  top_five_faults = get_honeybadger_errors(project_id: project, order: "frequent")
+  recent_five_faults = get_honeybadger_errors(project_id: project, order: "recent")
 
-  send_event('most_freq_fault', {errors: top_five_faults})
-  send_event('most_recent_fault', {errors: recent_five_faults})
+  send_event("#{name}_freq", errors: top_five_faults)
+  send_event("#{name}_rec", errors: recent_five_faults)
+end
+
+SCHEDULER.every '5m', first_in: 0 do |_job|
+  send_errors(34466, 'nps')
+  send_errors(43945, 'auth')
+
+  # top_five_faults = get_honeybadger_errors(project_id: '34466', order: "frequent")
+  # recent_five_faults = get_honeybadger_errors(project_id: '34466', order: "recent")
+
+  # send_event('nps_freq', errors: top_five_faults)
+  # send_event('nps_rec', errors: recent_five_faults)
 end
