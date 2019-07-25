@@ -18,6 +18,7 @@ GEM
     daemons (1.2.6)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.7.2)
     equalizer (0.0.11)
     et-orbi (1.1.6)
       tzinfo
@@ -43,9 +44,12 @@ GEM
       multipart-post
       oauth (~> 0.5, >= 0.5.0)
     json (2.1.0)
+    libv8 (7.3.492.27.1-x86_64-linux)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     mime-types (1.25.1)
+    mini_racer (0.2.6)
+      libv8 (>= 6.9.411)
     minitest (5.11.3)
     multi_json (1.13.1)
     multipart-post (2.0.0)
@@ -126,7 +130,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dotenv
   jira-ruby
+  mini_racer
   semaphoreapp
   sinatra_cyclist
   smashing
@@ -134,4 +140,4 @@ DEPENDENCIES
   zendesk_api (~> 1.4.3)
 
 BUNDLED WITH
-   1.16.3
+   1.17.2

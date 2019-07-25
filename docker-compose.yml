@@ -9,3 +9,5 @@ services:
       - .env.docker
     tty: true
     stdin_open: true
+    volumes:
+      - .:/dashboard-sdm

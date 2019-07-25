@@ -4,7 +4,7 @@ require 'jira-ruby'
 host = ENV['JIRA_HOST']
 username = ENV['JIRA_USERNAME']
 password = ENV['JIRA_PASSWORD']
-project = ENV['JIRA_PROJECT']
+project_query = ENV['JIRA_BOARD_QUERY']
 
 options = {
   username: username,
@@ -15,7 +15,6 @@ options = {
   read_timeout: 120
 }
 
-project_query = "PROJECT = \"#{project}\""
 STATUS = {
   backlog: 'Backlog',
   ready_dev: 'Ready to Dev',
@@ -39,7 +38,6 @@ CLASS_OF_SERVICE = {
 not_finished_query = "STATUS != '#{STATUS[:done]}' AND \
                       STATUS != '#{STATUS[:archived]}' AND \
                       STATUS != '#{STATUS[:cancelled]}'"
-
 
 SCHEDULER.every '5m', :first_in => 0 do |job|
   client = JIRA::Client.new(options)
