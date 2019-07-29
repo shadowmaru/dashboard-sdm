@@ -10,8 +10,15 @@ configure do
 
   helpers do
     def protected!
-      # Put any authentication code you want in here.
-      # This method is run before accessing any resource.
+      # Define allowed ips
+      ips_from_env_var = ENV['ALLOWED_IP_ADDRESSES'].split(',').map(&:strip)
+      @ips = ['127.0.0.1'] + ips_from_env_var
+
+      # If request IP is not included
+      unless @ips.include?(request.ip) || ENV['RACK_ENV'] == 'development'
+        # Deny request
+        throw(:halt, [401, "Not authorized\n"])
+      end
     end
   end
 end
