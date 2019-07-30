@@ -28,5 +28,6 @@ map Sinatra::Application.assets_prefix do
 end
 
 set :routes_to_cycle_through, %i[apoio-jira apoio-semaphore apoio-honeybadger apoio-flowclimate]
+set :cycle_duration, 60
 
 run Sinatra::Application
