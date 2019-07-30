@@ -27,7 +27,7 @@ end
 SCHEDULER.every '60m', first_in: 0 do |_job|
   cmd = flowclimate_cmd(team_id: ENV['FLOWCLIMATE_TEAM_ID'])
 
-  send_event('team-name', title: cmd['data']['team_name'], text: cmd['message'])
+  send_event('flowclimate-team-name', title: cmd['data']['team_name'], text: cmd['message'])
 
   send_event(
     'cmdCurrent',
