@@ -39,7 +39,7 @@ not_finished_query = "STATUS != '#{STATUS[:done]}' AND \
                       STATUS != '#{STATUS[:archived]}' AND \
                       STATUS != '#{STATUS[:cancelled]}'"
 
-SCHEDULER.every '5m', :first_in => 0 do |job|
+SCHEDULER.every '15m', :first_in => 0 do |job|
   client = JIRA::Client.new(options)
 
   in_progress_issues = client.Issue.jql(

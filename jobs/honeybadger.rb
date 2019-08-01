@@ -36,7 +36,7 @@ def send_errors(project, name)
   send_event("#{name}_rec", errors: recent_five_faults)
 end
 
-SCHEDULER.every '5m', first_in: 0 do |_job|
+SCHEDULER.every '15m', first_in: 0 do |_job|
   send_errors(34466, 'nps')
   send_errors(43945, 'auth')
 
